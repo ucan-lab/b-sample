@@ -1,7 +1,7 @@
 name: Assign Labels
 on:
   pull_request:
-    types: [opened]
+    # types: [opened]
 jobs:
   assign-team-label:
     runs-on: ubuntu-20.04

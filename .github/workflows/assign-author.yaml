@@ -1,0 +1,17 @@
+name: Assign Author
+on:
+  pull_request:
+    # types: [opened]
+jobs:
+  assign-author:
+    if: endsWith(github.actor, '[bot]') == false && github.event.pull_request.assignee == null
+    runs-on: ubuntu-20.04
+#    permissions:
+#      pull-requests: write
+#      repository-projects: read
+    steps:
+      - name: Add event actor to assignees
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh pr edit ${{ github.event.number }} --add-assignee ${{ github.actor }}
