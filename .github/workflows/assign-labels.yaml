@@ -1,10 +1,10 @@
 name: Assign Labels
 on:
   pull_request:
-#    types: [opened]
+    types: [opened]
 jobs:
   assign-team-label:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
       - name: Load Teams Configuration
