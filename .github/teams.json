@@ -1,0 +1,41 @@
+[
+  {
+    "name": "miraito",
+    "members": [
+      "ucan-lab",
+      "toshikatsu-tsuzuki",
+      "y-horikoshi-miraito",
+      "t-kurumagawa",
+      "kakiuchi-miraito"
+    ],
+    "label": "team:ミライト"
+  },
+  {
+    "name": "genghis",
+    "members": [
+      "IP-Okamoto-Tomoki",
+      "ip-wataruabe",
+      "b139-IGUCHI",
+      "ipst0048",
+      "ipkk071",
+      "ipot0087",
+      "ipmy0111",
+      "ipsk0117",
+      "ipst0130",
+      "ipam0133-AchiwaMotoki",
+      "iptm0122",
+      "Y-Tanabe-bussiness",
+      "ip-mi-yashiki"
+    ],
+    "label": "team:チンギス"
+  },
+  {
+    "name": "NES",
+    "members": [
+      "akihiko-yoshimura",
+      "yuuk-okada",
+      "kazuo-kawaguchi-cnt"
+    ],
+    "label": "team:NES"
+  }
+]

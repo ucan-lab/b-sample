@@ -1,0 +1,29 @@
+name: Assign Labels
+on:
+  pull_request:
+    # types: [opened]
+jobs:
+  assign-team-label:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Load Teams Configuration
+        run: |
+          teams=$(cat .github/teams.json)
+          echo "teams<<EOF" >> $GITHUB_ENV
+          echo "$teams" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+      - name: Assign Team Label
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TEAMS: ${{ env.teams }}
+        run: |
+          echo "$TEAMS" | jq -c '.[]' | while read -r team; do
+            members=$(echo "$team" | jq -r '.members | join(",")')
+            label=$(echo "$team" | jq -r '.label')
+
+            if [[ ",$members," == *",${{ github.actor }},"* ]]; then
+              gh issue edit ${{ github.event.number }} --add-label "$label"
+              exit 0
+            fi
+          done
