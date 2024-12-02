@@ -5,30 +5,23 @@ on:
 jobs:
   assign-team-label:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        team-config:
-          - name: miraito
-            members: ucan-lab,toshikatsu-tsuzuki,y-horikoshi-miraito,t-kurumagawa,kakiuchi-miraito
-            label: team:ミライト
-          - name: genghis
-            members: IP-Okamoto-Tomoki,ip-wataruabe,ipsk0117,b139-IGUCHI,ipmy0111,ipst0130,iptm0122,ipot0087,Y-Tanabe-bussiness,ipam0133-AchiwaMotoki,ipkk071,ipst0048,ip-mi-yashiki
-            label: team:チンギス
-          - name: NES
-            members: akihiko-yoshimura,yuuk-okada,kazuo-kawaguchi-cnt
-            label: team:NES
     steps:
       - uses: actions/checkout@v4
-      - name: Check if PR creator is in the current team
-        id: check_user
+      - name: Load Teams Configuration
         run: |
-          echo "is_team_member=false" >> $GITHUB_ENV
-          if [[ ",${{ matrix.team-config.members }}," == *",${{ github.actor }},"* ]]; then
-            echo "is_team_member=true" >> $GITHUB_ENV
-          fi
-      - name: Assign Team Label using GitHub API
-        if: env.is_team_member == 'true'
+          teams=$(cat .github/teams.json)
+          echo "teams=$teams" >> $GITHUB_ENV
+      - name: Assign Team Label
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TEAMS: ${{ env.teams }}
         run: |
-          gh issue edit ${{ github.event.number }} --add-label "${{ matrix.team-config.label }}"
+          echo "$TEAMS" | jq -c '.[]' | while read -r team; do
+            members=$(echo "$team" | jq -r '.members | join(",")')
+            label=$(echo "$team" | jq -r '.label')
+          
+            if [[ ",$members," == *",${{ github.actor }},"* ]]; then
+              gh issue edit ${{ github.event.number }} --add-label "$label"
+              exit 0
+            fi
+          done
