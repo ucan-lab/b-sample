@@ -1,7 +1,7 @@
 name: Assign Labels
 on:
   pull_request:
-    types: [opened]
+#    types: [opened]
 jobs:
   assign-team-label:
     runs-on: ubuntu-latest
@@ -19,7 +19,7 @@ jobs:
           echo "$TEAMS" | jq -c '.[]' | while read -r team; do
             members=$(echo "$team" | jq -r '.members | join(",")')
             label=$(echo "$team" | jq -r '.label')
-          
+
             if [[ ",$members," == *",${{ github.actor }},"* ]]; then
               gh issue edit ${{ github.event.number }} --add-label "$label"
               exit 0
