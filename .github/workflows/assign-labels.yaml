@@ -10,7 +10,9 @@ jobs:
       - name: Load Teams Configuration
         run: |
           teams=$(cat .github/teams.json)
-          echo "teams=$teams" >> $GITHUB_ENV
+          echo "teams<<EOF" >> $GITHUB_ENV
+          echo "$teams" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
       - name: Assign Team Label
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
