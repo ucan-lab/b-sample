@@ -22,3 +22,5 @@ jobs:
         run: php -m
       - name: Display Composer version
         run: composer -V
+      - name: Display Composer diagnose
+        run: composer diagnose
