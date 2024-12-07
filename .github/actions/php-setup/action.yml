@@ -5,6 +5,10 @@ inputs:
     description: 'PHP version to install'
     required: true
     type: string
+  composer-version:
+    description: 'Composer version to install'
+    required: true
+    type: string
 runs:
   using: composite
   steps:
@@ -18,15 +22,20 @@ runs:
     - name: Install PHP
       shell: bash
       run: |
-        sudo apt-get install -y php${{ inputs.php-version }}
-#        php${{ inputs.php-version }}-cli \
-#        php${{ inputs.php-version }}-mbstring \
-#        php${{ inputs.php-version }}-xml \
-#        php${{ inputs.php-version }}-curl \
-#        php${{ inputs.php-version }}-zip \
-#        php${{ inputs.php-version }}-bcmath \
-#        php${{ inputs.php-version }}-bz2 \
-#        php${{ inputs.php-version }}-calendar \
-#        php${{ inputs.php-version }}-mcrypt \
-#        php${{ inputs.php-version }}-pdo-sqlite \
-#        php${{ inputs.php-version }}-sqlite3
+        sudo apt-get install -y \
+        php${{ inputs.php-version }} \
+        php${{ inputs.php-version }}-cli \
+        php${{ inputs.php-version }}-mbstring \
+        php${{ inputs.php-version }}-xml \
+        php${{ inputs.php-version }}-curl \
+        php${{ inputs.php-version }}-zip \
+        php${{ inputs.php-version }}-bcmath \
+        php${{ inputs.php-version }}-bz2 \
+        php${{ inputs.php-version }}-calendar \
+        php${{ inputs.php-version }}-pdo-sqlite \
+        php${{ inputs.php-version }}-sqlite3
+    - name: Install Composer
+      shell: bash
+      run: |
+        curl -sS https://getcomposer.org/installer | php -- --version=${{ inputs.composer-version }}
+        sudo mv composer.phar /usr/local/bin/composer

@@ -15,6 +15,7 @@ jobs:
         uses: ./.github/actions/php-setup
         with:
           php-version: '8.2'
+          composer-version: '2.7.7'
       - name: Display PHP version
         run: php -v
       - name: Display PHP module
