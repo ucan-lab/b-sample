@@ -1,0 +1,32 @@
+name: PHP Setup
+description: PHP をインストールするアクション
+inputs:
+  php-version:
+    description: 'PHP version to install'
+    required: true
+    type: string
+runs:
+  using: composite
+  steps:
+    - name: Add PHP repository
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository -y ppa:ondrej/php
+        sudo apt-get update
+    - name: Install PHP
+      shell: bash
+      run: |
+        sudo apt-get install -y php${{ inputs.php-version }}
+#        php${{ inputs.php-version }}-cli \
+#        php${{ inputs.php-version }}-mbstring \
+#        php${{ inputs.php-version }}-xml \
+#        php${{ inputs.php-version }}-curl \
+#        php${{ inputs.php-version }}-zip \
+#        php${{ inputs.php-version }}-bcmath \
+#        php${{ inputs.php-version }}-bz2 \
+#        php${{ inputs.php-version }}-calendar \
+#        php${{ inputs.php-version }}-mcrypt \
+#        php${{ inputs.php-version }}-pdo-sqlite \
+#        php${{ inputs.php-version }}-sqlite3

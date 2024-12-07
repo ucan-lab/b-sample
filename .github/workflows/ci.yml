@@ -1,0 +1,21 @@
+name: Continuous Integration
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+  workflow_dispatch:
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: ./.github/actions/php-setup
+        with:
+          php-version: '8.2'
+      - name: Display PHP version
+        run: php -v
+      - name: Display PHP module
+        run: php -m
