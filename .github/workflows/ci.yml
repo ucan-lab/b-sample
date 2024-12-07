@@ -1,0 +1,26 @@
+name: Continuous Integration
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+  workflow_dispatch:
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: ./.github/actions/php-setup
+        with:
+          php-version: '8.2'
+          composer-version: '2.7.7'
+      - name: Display PHP version
+        run: php -v
+      - name: Display PHP module
+        run: php -m
+      - name: Display Composer version
+        run: composer -V
+      - name: Display Composer diagnose
+        run: composer diagnose
