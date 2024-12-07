@@ -20,3 +20,5 @@ jobs:
         run: php -v
       - name: Display PHP module
         run: php -m
+      - name: Display Composer version
+        run: composer -V
